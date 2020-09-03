@@ -1,5 +1,6 @@
 package com.naru.howaboutthis.user.controller;
 
+import com.naru.howaboutthis.exception.DuplicateEmailException;
 import com.naru.howaboutthis.user.domain.Policy;
 import com.naru.howaboutthis.user.domain.PolicySingleton;
 import com.naru.howaboutthis.user.domain.User;
@@ -28,7 +29,16 @@ public class SignUpController {
 
     @PostMapping("/signup")
     public ResponseEntity<Void> signup(@RequestBody User user) {
+        String email = user.getEmail();
+        if (userRepository.findByEmail(email) != null) {
+            throw new DuplicateEmailException("중복된 이메일입니다");
+        }
         userRepository.save(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @ExceptionHandler(DuplicateEmailException.class)
+    public ResponseEntity<String> handleDuplicateEmailException(DuplicateEmailException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
     }
 }
