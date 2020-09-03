@@ -9,9 +9,6 @@ public class PolicySingleton {
     private PolicySingleton() {}
 
     public static Policy getInstance() {
-        if (policy == null) {
-            policy = new Policy();
-        }
-        return policy;
+        return policy == null ? new Policy() : policy;
     }
 }
