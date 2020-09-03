@@ -26,6 +26,11 @@ public class SignUpController {
         return PolicySingleton.getInstance();
     }
 
+    @PostMapping("/signup/email-check")
+    public ResponseEntity<Boolean> canUseEmail(String email) {
+        return new ResponseEntity<>(signupService.canUseEmail(email), HttpStatus.OK);
+    }
+
     @PostMapping("/signup")
     public ResponseEntity<Void> signup(@RequestBody User user) {
         signupService.save(user);

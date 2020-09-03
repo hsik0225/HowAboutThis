@@ -8,9 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@Entity
 @Setter
 @NoArgsConstructor
-@Entity
 public class User {
 
     @Id
@@ -22,4 +22,8 @@ public class User {
     private String password;
 
     private String name;
+
+    public String getEmail() {
+        return email;
+    }
 }
