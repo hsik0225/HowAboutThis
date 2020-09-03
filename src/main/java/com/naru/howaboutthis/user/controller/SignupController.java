@@ -27,8 +27,12 @@ public class SignupController {
     }
 
     @PostMapping("/signup/email-check")
-    public ResponseEntity<Boolean> canUseEmail(String email) {
-        return new ResponseEntity<>(signupService.canUseEmail(email), HttpStatus.OK);
+    public ResponseEntity<Boolean> canUseEmail(@RequestBody String email) {
+        HttpStatus status = HttpStatus.OK;
+        if (!signupService.canUseEmail(email)) {
+            status = HttpStatus.CONFLICT;
+        }
+        return new ResponseEntity<>(status);
     }
 
     @PostMapping("/signup")
@@ -39,6 +43,6 @@ public class SignupController {
 
     @ExceptionHandler(DuplicateEmailException.class)
     public ResponseEntity<String> handleDuplicateEmailException(DuplicateEmailException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
     }
 }

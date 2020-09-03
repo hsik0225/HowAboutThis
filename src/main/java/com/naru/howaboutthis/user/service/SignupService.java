@@ -27,7 +27,7 @@ public class SignupService {
         userRepository.save(user);
     }
 
-    public boolean canUseEmail(String email) {
+    public Boolean canUseEmail(String email) {
         return userRepository.findByEmail(email) == null;
     }
 }
