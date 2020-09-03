@@ -29,7 +29,7 @@ public class SignupController {
     @PostMapping("/signup/email-check")
     public ResponseEntity<Boolean> canUseEmail(@RequestBody String email) {
         HttpStatus status = HttpStatus.OK;
-        if (!signupService.canUseEmail(email)) {
+        if (signupService.isDuplicatedEmail(email)) {
             status = HttpStatus.CONFLICT;
         }
         return new ResponseEntity<>(status);
