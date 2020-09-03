@@ -16,14 +16,18 @@ public class SignupService {
         this.userRepository = userRepository;
     }
 
-    // javax Transaction vs SpringFramwork Transactional
+    // javax Transactional vs SpringFramework Transactional
     // http://wonwoo.ml/index.php/post/776
     @Transactional
     public void save(User user) {
         String email = user.getEmail();
-        if (userRepository.findByEmail(email) != null) {
+        if (!canUseEmail(email)) {
             throw new DuplicateEmailException("중복된 이메일입니다");
         }
         userRepository.save(user);
+    }
+
+    public boolean canUseEmail(String email) {
+        return userRepository.findByEmail(email) == null;
     }
 }
