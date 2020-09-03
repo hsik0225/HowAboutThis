@@ -4,7 +4,7 @@ import com.naru.howaboutthis.exception.DuplicateEmailException;
 import com.naru.howaboutthis.user.domain.Policy;
 import com.naru.howaboutthis.user.domain.PolicySingleton;
 import com.naru.howaboutthis.user.domain.User;
-import com.naru.howaboutthis.user.domain.UserRepository;
+import com.naru.howaboutthis.user.service.SignupService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +15,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class SignUpController {
 
-    private final UserRepository userRepository;
+    private final SignupService signupService;
 
-    // 생성자 기반 DI
-    SignUpController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public SignUpController(SignupService signupService) {
+        this.signupService = signupService;
     }
 
     @GetMapping("/policy")
@@ -29,11 +28,7 @@ public class SignUpController {
 
     @PostMapping("/signup")
     public ResponseEntity<Void> signup(@RequestBody User user) {
-        String email = user.getEmail();
-        if (userRepository.findByEmail(email) != null) {
-            throw new DuplicateEmailException("중복된 이메일입니다");
-        }
-        userRepository.save(user);
+        signupService.save(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
