@@ -26,8 +26,8 @@ public class SignupController {
         return PolicySingleton.getInstance();
     }
 
-    @PostMapping("/signup/email-check")
-    public ResponseEntity<Boolean> canUseEmail(@RequestBody String email) {
+    @GetMapping("/signup/{email}")
+    public ResponseEntity<Boolean> canUseEmail(@PathVariable String email) {
         HttpStatus status = HttpStatus.OK;
         if (signupService.isDuplicatedEmail(email)) {
             status = HttpStatus.CONFLICT;
