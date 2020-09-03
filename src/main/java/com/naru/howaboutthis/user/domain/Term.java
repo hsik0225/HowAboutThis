@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class Term {
 
-    String title;
+    private final String title;
 
-    String[] contents;
+    private final String[] contents;
 }
