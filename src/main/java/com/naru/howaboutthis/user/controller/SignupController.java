@@ -22,8 +22,14 @@ public class SignupController {
     }
 
     @GetMapping("/policy")
-    public Policy policy() {
-        return PolicySingleton.getInstance();
+    public ResponseEntity<Policy> policy() {
+        return ResponseEntity.ok(PolicySingleton.getInstance());
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity<Void> signup(@RequestBody User user) {
+        signupService.save(user);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/signup/{email}")
@@ -33,12 +39,6 @@ public class SignupController {
             status = HttpStatus.CONFLICT;
         }
         return new ResponseEntity<>(status);
-    }
-
-    @PostMapping("/signup")
-    public ResponseEntity<Void> signup(@RequestBody User user) {
-        signupService.save(user);
-        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @ExceptionHandler(DuplicateEmailException.class)
