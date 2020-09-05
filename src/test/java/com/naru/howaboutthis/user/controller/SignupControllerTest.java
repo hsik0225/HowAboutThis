@@ -43,6 +43,15 @@ class SignupControllerTest {
     }
 
     @Test
+    @DisplayName("중복된_이메일_입력_테스트")
+    void 중복된_이메일_입력_테스트() throws Exception {
+        String testEmail = "hsik0225@gmail.com";
+        mockMvc.perform(get("/api/users/{email}", testEmail))
+                .andDo(print())
+                .andExpect(status().isConflict());
+    }
+
+    @Test
     @Transactional
     @DisplayName("회원가입_테스트")
     void 회원가입_테스트() {
