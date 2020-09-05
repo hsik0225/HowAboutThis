@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 @RestController
 public class SignupController {
 
@@ -26,13 +26,13 @@ public class SignupController {
         return ResponseEntity.ok(PolicySingleton.getInstance());
     }
 
-    @PostMapping("/signup")
+    @PostMapping
     public ResponseEntity<Void> signup(@RequestBody User user) {
         signupService.save(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("/signup/{email}")
+    @GetMapping("/{email}")
     public ResponseEntity<Boolean> canUseEmail(@PathVariable String email) {
         HttpStatus status = HttpStatus.OK;
         if (signupService.isDuplicatedEmail(email)) {
