@@ -21,13 +21,13 @@ public class SignupService {
     @Transactional
     public void save(User user) {
         String email = user.getEmail();
-        if (isDuplicatedEmail(email)) {
-            throw new DuplicateEmailException("중복된 이메일입니다");
-        }
+        checkDuplication(email);
         userRepository.save(user);
     }
 
-    public Boolean isDuplicatedEmail(String email) {
-        return userRepository.findByEmail(email) != null;
+    public void checkDuplication(String email) {
+        if (userRepository.findByEmail(email) != null) {
+            throw new DuplicateEmailException("중복된 이메일입니다");
+        }
     }
 }
