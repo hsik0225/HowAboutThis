@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -30,5 +31,18 @@ class SignupControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length").exists())
                 .andExpect(jsonPath("$.terms").exists());
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("회원가입_테스트")
+    void 회원가입_테스트() {
+
+    }
+
+    @Test
+    @DisplayName("이메일_중복_검사_테스트")
+    void 이메일_중복_검사_테스트() {
+
     }
 }
