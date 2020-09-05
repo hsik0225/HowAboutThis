@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
-@RequestMapping("/api/users")
+@RequestMapping("api/users")
 @RestController
 public class SignupController {
 
