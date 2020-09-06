@@ -14,8 +14,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.ConstraintViolationException;
-import javax.validation.Valid;
 import javax.validation.constraints.Email;
+import javax.validation.groups.Default;
 
 @Slf4j
 @Validated // @RequestParam 이나 @PatVariable을 메소드에서 Validation할 수 있게 한다
@@ -35,7 +35,7 @@ public class SignUpController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> signUp(@RequestBody @Valid User user) {
+    public ResponseEntity<Void> signUp(@RequestBody @Validated({Default.class, SignUp.class}) User user) {
         signupService.save(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
