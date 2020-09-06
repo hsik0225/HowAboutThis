@@ -2,10 +2,7 @@ package com.naru.howaboutthis.user.domain;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -14,12 +11,13 @@ import javax.persistence.Id;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
     private String email;
 
     private String password;

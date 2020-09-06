@@ -26,7 +26,9 @@ public class SignUpService {
     }
 
     public boolean isDuplicated(String email) {
-        userRepository.findByEmail(email).orElseThrow(() -> new DuplicateEmailException("중복된 이메일입니다"));
+        if (userRepository.findByEmail(email).isPresent()) {
+            throw new DuplicateEmailException("중복된 이메일입니다");
+        }
         return false;
     }
 }
