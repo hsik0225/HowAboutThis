@@ -3,7 +3,7 @@ package com.naru.howaboutthis.user.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.naru.howaboutthis.exception.DuplicateEmailException;
 import com.naru.howaboutthis.user.domain.User;
-import com.naru.howaboutthis.user.service.SignupService;
+import com.naru.howaboutthis.user.service.SignUpService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
@@ -19,14 +19,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(SignupController.class)
-class SignupControllerTest {
+@WebMvcTest(SignUpController.class)
+class SignUpControllerTest {
 
     @Autowired
     MockMvc mockMvc;
 
     @MockBean
-    private SignupService signupService;
+    private SignUpService signupService;
 
     @Test
     @DisplayName("이용약관 목록 테스트")

@@ -4,7 +4,7 @@ import com.naru.howaboutthis.exception.DuplicateEmailException;
 import com.naru.howaboutthis.user.domain.Policy;
 import com.naru.howaboutthis.user.domain.PolicySingleton;
 import com.naru.howaboutthis.user.domain.User;
-import com.naru.howaboutthis.user.service.SignupService;
+import com.naru.howaboutthis.user.service.SignUpService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequestMapping("/api/users")
 @RestController
-public class SignupController {
+public class SignUpController {
 
-    private final SignupService signupService;
+    private final SignUpService signupService;
 
-    public SignupController(SignupService signupService) {
+    public SignUpController(SignUpService signupService) {
         this.signupService = signupService;
     }
 
@@ -27,7 +27,7 @@ public class SignupController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> signup(@RequestBody User user) {
+    public ResponseEntity<Void> signUp(@RequestBody User user) {
         signupService.save(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

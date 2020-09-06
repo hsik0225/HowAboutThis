@@ -49,7 +49,7 @@ public class UserRepositoryTest {
         String email = "test@naver.com";
 
         // when
-        User foundUser = userRepository.findByEmail(email);
+        User foundUser = userRepository.findByEmail(email).get();
 
         // then
         assertThat(foundUser).isNotNull();

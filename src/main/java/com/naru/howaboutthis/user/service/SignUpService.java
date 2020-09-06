@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class SignupService {
+public class SignUpService {
 
     private final UserRepository userRepository;
 
     // 생성자 기반 DI
-    public SignupService(UserRepository userRepository) {
+    public SignUpService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -26,9 +26,7 @@ public class SignupService {
     }
 
     public boolean isDuplicated(String email) {
-        if (userRepository.findByEmail(email) != null) {
-            throw new DuplicateEmailException("중복된 이메일입니다");
-        }
+        userRepository.findByEmail(email).orElseThrow(() -> new DuplicateEmailException("중복된 이메일입니다"));
         return false;
     }
 }
