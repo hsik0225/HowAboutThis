@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.Email;
 
 @Slf4j
 @Validated // @RequestParam 이나 @PatVariable을 메소드에서 Validation할 수 있게 한다
@@ -41,7 +41,7 @@ public class SignUpController {
     }
 
     @GetMapping("/{email}")
-    public ResponseEntity<Void> canUseEmail(@PathVariable @Min(4) String email, @RequestParam @Min(4) String test) {
+    public ResponseEntity<Void> canUseEmail(@PathVariable @Email String email) {
         signupService.isDuplicated(email);
         return new ResponseEntity<>(HttpStatus.OK);
     }
