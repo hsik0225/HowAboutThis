@@ -8,8 +8,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
+@Getter
 @Setter
+@Builder
+@ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id
@@ -21,8 +25,4 @@ public class User {
     private String password;
 
     private String name;
-
-    public String getEmail() {
-        return email;
-    }
 }
