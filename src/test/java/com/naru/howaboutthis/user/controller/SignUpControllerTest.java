@@ -1,9 +1,10 @@
 package com.naru.howaboutthis.user.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.naru.howaboutthis.exception.DuplicateEmailException;
+import com.naru.howaboutthis.user.domain.PolicySingleton;
 import com.naru.howaboutthis.user.domain.User;
 import com.naru.howaboutthis.user.service.SignUpService;
+import com.naru.howaboutthis.util.ObjectToJsonConverter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
@@ -16,8 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(SignUpController.class)
 class SignUpControllerTest {
@@ -31,11 +31,11 @@ class SignUpControllerTest {
     @Test
     @DisplayName("이용약관 목록 테스트")
     void 이용약관_목록_테스트() throws Exception {
+        String jsonPolicy = ObjectToJsonConverter.ObjectToJson(PolicySingleton.getInstance());
         mockMvc.perform(get("/api/users/policy"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length").exists())
-                .andExpect(jsonPath("$.terms").exists());
+                .andExpect(content().json(jsonPolicy));
     }
 
     @Test
@@ -44,7 +44,8 @@ class SignUpControllerTest {
         String testEmail = "test@mail.com";
         mockMvc.perform(get("/api/users/{email}", testEmail))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").doesNotExist());
     }
 
     @Test
@@ -62,13 +63,14 @@ class SignUpControllerTest {
     @DisplayName("회원가입_테스트")
     void 회원가입_테스트() throws Exception {
         User testUser = new User();
-        testUser.setEmail("test@naver.com");
+        testUser.setEmail("test@email.com");
         testUser.setName("naru");
-        testUser.setPassword("test1234");
+        testUser.setPassword("Test1234");
 
-        String testUserJson = new ObjectMapper().writeValueAsString(testUser);
-        mockMvc.perform(post("/api/users").contentType(MediaType.APPLICATION_JSON).content(testUserJson))
+        String jsonTestUser = ObjectToJsonConverter.ObjectToJson(testUser);
+        mockMvc.perform(post("/api/users").contentType(MediaType.APPLICATION_JSON).content(jsonTestUser))
                 .andDo(print())
-                .andExpect(status().isCreated());
+                .andExpect(status().isFound())
+                .andExpect(redirectedUrl("/api/main"));
     }
 }
