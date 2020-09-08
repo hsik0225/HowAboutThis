@@ -23,8 +23,7 @@ import java.net.URISyntaxException;
 // @RequestParam 이나 @PatVariable을 메소드에서 Validation할 수 있게 한다
 @Validated
 
-// 기본 인코딩 형식은 "ISO-8869-1"이다. "ISO-8869-1"은 한글을 읽을 수 없으므로 "UTF-8"로 변경
-@RequestMapping(value = "/api/users", produces = {"application/json; charset=UTF-8"})
+@RequestMapping(value = "/api/users")
 @RestController
 public class SignUpController {
 
