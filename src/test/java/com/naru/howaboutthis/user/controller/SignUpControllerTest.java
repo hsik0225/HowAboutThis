@@ -1,39 +1,55 @@
 package com.naru.howaboutthis.user.controller;
 
+import com.naru.howaboutthis.config.CharsetEncodingFilter;
 import com.naru.howaboutthis.exception.DuplicateEmailException;
+import com.naru.howaboutthis.exception.advice.UserExceptionAdvice;
 import com.naru.howaboutthis.user.domain.PolicySingleton;
 import com.naru.howaboutthis.user.domain.User;
 import com.naru.howaboutthis.user.service.SignUpService;
 import com.naru.howaboutthis.util.ObjectToJsonConverter;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(SignUpController.class)
+@ExtendWith(MockitoExtension.class)
 class SignUpControllerTest {
 
-    @Autowired
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
-    @MockBean
+    @Mock
     private SignUpService signupService;
+
+    @InjectMocks
+    private SignUpController signUpController;
+
+    @BeforeEach
+    public void setup() {
+        mockMvc = MockMvcBuilders.standaloneSetup(signUpController)
+                .setControllerAdvice(new UserExceptionAdvice())
+                .addFilters(new CharsetEncodingFilter())
+                .alwaysDo(print())
+                .build();
+    }
 
     @Test
     @DisplayName("이용약관 목록 테스트")
     void 이용약관_목록_테스트() throws Exception {
         String jsonPolicy = ObjectToJsonConverter.ObjectToJson(PolicySingleton.getInstance());
         mockMvc.perform(get("/api/users/policy"))
-                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json(jsonPolicy));
     }
@@ -41,9 +57,11 @@ class SignUpControllerTest {
     @Test
     @DisplayName("중복되지_않은_이메일_입력_테스트")
     void 중복되지_않은_이메일_입력_테스트() throws Exception {
-        String testEmail = "test@mail.com";
-        mockMvc.perform(get("/api/users/{email}", testEmail))
-                .andDo(print())
+        // given
+        when(signupService.isDuplicated(anyString())).thenReturn(false);
+
+        // when, then
+        mockMvc.perform(get("/api/users/test@mail.com"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").doesNotExist());
     }
@@ -51,11 +69,11 @@ class SignUpControllerTest {
     @Test
     @DisplayName("중복된_이메일_입력_테스트")
     void 중복된_이메일_입력_테스트() throws Exception {
-        String testEmail = "test@mail.com";
-        BDDMockito.given(signupService.isDuplicated(testEmail)).willThrow(DuplicateEmailException.class);
+        // given
+        when(signupService.isDuplicated(anyString())).thenThrow(DuplicateEmailException.class);
 
-        mockMvc.perform(get("/api/users/{email}", testEmail))
-                .andDo(print())
+        // when, then
+        mockMvc.perform(get("/api/users/test@mail.com"))
                 .andExpect(status().isConflict());
     }
 
@@ -69,7 +87,6 @@ class SignUpControllerTest {
 
         String jsonTestUser = ObjectToJsonConverter.ObjectToJson(testUser);
         mockMvc.perform(post("/api/users").contentType(MediaType.APPLICATION_JSON).content(jsonTestUser))
-                .andDo(print())
                 .andExpect(status().isFound())
                 .andExpect(redirectedUrl("/api/main"));
     }
