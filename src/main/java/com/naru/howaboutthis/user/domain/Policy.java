@@ -1,8 +1,11 @@
 package com.naru.howaboutthis.user.domain;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class Policy {
 
     private static final int LENGTH = 20;

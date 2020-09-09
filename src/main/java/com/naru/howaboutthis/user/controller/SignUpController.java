@@ -21,16 +21,17 @@ import java.net.URISyntaxException;
 
 // @RequestParam 이나 @PatVariable을 메소드에서 Validation할 수 있게 한다
 @Validated
-
 @RequestMapping(value = "/api/users")
 @RestController
 public class SignUpController {
 
     private final SignUpService signUpService;
 
+    private final Policy policy;
+
     @GetMapping("/policy")
     public ResponseEntity<Policy> policy() {
-        return ResponseEntity.ok(PolicySingleton.getInstance());
+        return ResponseEntity.ok(policy);
     }
 
     @PostMapping
