@@ -3,7 +3,6 @@ package com.naru.howaboutthis.user.controller;
 import com.naru.howaboutthis.config.CharsetEncodingFilter;
 import com.naru.howaboutthis.exception.DuplicateEmailException;
 import com.naru.howaboutthis.exception.advice.UserExceptionAdvice;
-import com.naru.howaboutthis.user.domain.PolicySingleton;
 import com.naru.howaboutthis.user.domain.User;
 import com.naru.howaboutthis.user.service.SignUpService;
 import com.naru.howaboutthis.util.ObjectToJsonConverter;
