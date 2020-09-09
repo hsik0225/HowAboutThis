@@ -3,6 +3,7 @@ package com.naru.howaboutthis.user.controller;
 import com.naru.howaboutthis.config.CharsetEncodingFilter;
 import com.naru.howaboutthis.exception.DuplicateEmailException;
 import com.naru.howaboutthis.exception.advice.UserExceptionAdvice;
+import com.naru.howaboutthis.user.domain.Policy;
 import com.naru.howaboutthis.user.domain.User;
 import com.naru.howaboutthis.user.service.SignUpService;
 import com.naru.howaboutthis.util.ObjectToJsonConverter;
@@ -30,6 +31,9 @@ class SignUpControllerTest {
     private MockMvc mockMvc;
 
     @Mock
+    private Policy policy;
+
+    @Mock
     private SignUpService signupService;
 
     @InjectMocks
@@ -47,7 +51,7 @@ class SignUpControllerTest {
     @Test
     @DisplayName("이용약관 목록 테스트")
     void 이용약관_목록_테스트() throws Exception {
-        String jsonPolicy = ObjectToJsonConverter.ObjectToJson(PolicySingleton.getInstance());
+        String jsonPolicy = ObjectToJsonConverter.ObjectToJson(policy);
         mockMvc.perform(get("/api/users/policy"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(jsonPolicy));
