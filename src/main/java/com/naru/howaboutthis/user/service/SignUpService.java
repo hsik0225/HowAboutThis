@@ -22,6 +22,7 @@ public class SignUpService {
     public void save(User user) {
         String email = user.getEmail();
         checkDuplicateEmail(email);
+        user.hashPassword(user);
         userRepository.save(user);
     }
 
