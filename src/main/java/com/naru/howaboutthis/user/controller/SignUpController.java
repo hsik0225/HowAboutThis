@@ -46,7 +46,7 @@ public class SignUpController {
 
     @GetMapping("/{email}")
     public ResponseEntity<Void> canUseEmail(@PathVariable @Email String email) {
-        signUpService.isDuplicated(email);
+        signUpService.checkDuplicateEmail(email);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

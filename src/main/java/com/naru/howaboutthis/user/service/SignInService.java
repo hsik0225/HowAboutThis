@@ -13,11 +13,11 @@ public class SignInService {
 
     private final UserRepository userRepository;
 
-    public boolean signIn(User requestUser) {
-        boolean isSignedUpUser = userRepository.findByEmail(requestUser.getEmail()).isPresent();
+    public void checkUserByEmail(User requestUser) {
+        String email = requestUser.getEmail();
+        boolean isSignedUpUser = userRepository.findByEmail(email).isPresent();
         if (!isSignedUpUser) {
             throw new EntityNotFoundException("이 이메일로 가입된 아이디가 존재하지 않습니다");
         }
-        return true;
     }
 }

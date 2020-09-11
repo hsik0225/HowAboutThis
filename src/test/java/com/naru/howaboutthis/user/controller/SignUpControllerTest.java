@@ -15,7 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -45,10 +45,6 @@ class SignUpControllerTest {
     @Test
     @DisplayName("중복되지_않은_이메일_입력_테스트")
     void 중복되지_않은_이메일_입력_테스트() throws Exception {
-        // given
-        when(signupService.isDuplicated(anyString())).thenReturn(false);
-
-        // when, then
         mockMvc.perform(get("/api/users/test@mail.com"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").doesNotExist());
@@ -58,7 +54,7 @@ class SignUpControllerTest {
     @DisplayName("중복된_이메일_입력_테스트")
     void 중복된_이메일_입력_테스트() throws Exception {
         // given
-        when(signupService.isDuplicated(anyString())).thenThrow(DuplicateEmailException.class);
+        doThrow(DuplicateEmailException.class).when(signupService).checkDuplicateEmail(anyString());
 
         // when, then
         mockMvc.perform(get("/api/users/test@mail.com"))
