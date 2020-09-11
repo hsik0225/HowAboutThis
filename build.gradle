@@ -30,6 +30,11 @@ dependencies {
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
     testCompile("org.assertj:assertj-core:3.11.1")
+
+    // https://mvnrepository.com/artifact/com.h2database/h2
+    // test 를 위한 인메모리 데이터베이스 의존성 추가
+    testCompile 'com.h2database:h2:1.4.200'
+
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
