@@ -3,21 +3,16 @@ package com.naru.howaboutthis.user.service;
 import com.naru.howaboutthis.exception.DuplicateEmailException;
 import com.naru.howaboutthis.user.domain.User;
 import com.naru.howaboutthis.user.domain.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@RequiredArgsConstructor
 @Service
 public class SignUpService {
 
     private final UserRepository userRepository;
 
-    // 생성자 기반 DI
-    public SignUpService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    // javax Transactional vs SpringFramework Transactional
-    // http://wonwoo.ml/index.php/post/776
     @Transactional
     public void save(User user) {
         String email = user.getEmail();
