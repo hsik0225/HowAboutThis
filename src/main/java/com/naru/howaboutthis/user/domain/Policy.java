@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +13,7 @@ import java.util.List;
 
 // 기본 생성자의 접근제한자를 private으로 하여 만약의 생성을 방지한다
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class Policy implements Serializable {
+public class Policy {
 
     private static final int LENGTH = 20;
 
