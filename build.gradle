@@ -22,8 +22,8 @@ dependencies {
     // https://mvnrepository.com/artifact/org.mindrot/jbcrypt
     implementation 'org.mindrot:jbcrypt:0.4'
 
-    // 암호화 라이브러리
-    implementation 'org.jasypt:jasypt'
+    // 암호화
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.2'
 
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
