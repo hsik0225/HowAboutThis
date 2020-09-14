@@ -1,14 +1,18 @@
 spring:
-  profiles:
-    active: local
-
-
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
     initialization-mode: never
-    url: jdbc:mysql://localhost:3306/ever?serverTimezone=UTC&characterEncoding=UTF-8
-    username: ever
-    password: asdqwe1!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ENC(yWPwz7U86hGl249HzMfWggo6QD0EcG3tCBiQdxe3rcxYanKkWye/wT6/zfziFciC7VuGn7szmorza7EF/Onhssct6puYFbvfJEAj3b4Cx76DV9h/X0O7dQ==)
+    username: ENC(BzqKdNp1M5gQzGzshJ6tjA==)
+    password: ENC(ApNe3Sisy3IZEwuJfOTrmdcbdAM84KWX)
+
+github:
+  client-id : ENC(2uWOUrNK+zzsKmd9OnZGylyQgZSAIiNPAIKM7H4BYOo=)
+  client-secret : ENC(iGXs8vKVkwJSPykb1JM1cSHydIphFlJMQbOda8qElxogVYJpGdOkksGARxDweDA/xCb8cfVZaHg=)
+
+jasypt:
+  encryptor:
+    password: ${ENCRYPTOR_PASSWORD}
 ---
 spring:
   profiles: local
