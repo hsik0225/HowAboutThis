@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @TestInstance(value = TestInstance.Lifecycle.PER_CLASS)
-public class UserServiceTest {
+public class UserRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
