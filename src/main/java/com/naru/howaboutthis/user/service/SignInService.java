@@ -4,6 +4,7 @@ import com.naru.howaboutthis.user.domain.User;
 import com.naru.howaboutthis.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -13,11 +14,17 @@ public class SignInService {
 
     private final UserRepository userRepository;
 
+    @Transactional
     public void signIn(User loginRequestUser) {
         String email = loginRequestUser.getEmail();
         checkUserByEmail(email);
 
-        User savedUser = userRepository.findById(loginRequestUser.getId()).orElseThrow(() -> new EntityNotFoundException("존재하지 않는 아이디입니다"));
+        User savedUser = userRepository
+                .findById(loginRequestUser.getId())
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "이 회원은 잘못된 회원입니다\n"
+                                + "Id가 존재하지 않습니다"
+                        ));
         savedUser.checkPassword(loginRequestUser);
     }
 
