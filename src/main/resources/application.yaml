@@ -2,17 +2,13 @@ spring:
   datasource:
     initialization-mode: never
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ENC(yWPwz7U86hGl249HzMfWggo6QD0EcG3tCBiQdxe3rcxYanKkWye/wT6/zfziFciC7VuGn7szmorza7EF/Onhssct6puYFbvfJEAj3b4Cx76DV9h/X0O7dQ==)
-    username: ENC(BzqKdNp1M5gQzGzshJ6tjA==)
-    password: ENC(ApNe3Sisy3IZEwuJfOTrmdcbdAM84KWX)
+    url: ENC(ZPWAIrYvVGRbFYg0jksaFyLkQOzwvHs9mY5M2VJbK1QbTuQMOZTHVpJK86X94XNROPjeNTKprd01lKTTQO9pjfmSnCYZHWRfhaMa/3ftgazs5hC4OnHs0Q==)
+    username: ENC(MrJMwUIMZJUxxMzE0JVP/A==)
+    password: ENC(Kq6sm0YPnkGjzw4m23SgYA/hQ7bcnI8R)
 
 github:
-  client-id : ENC(2uWOUrNK+zzsKmd9OnZGylyQgZSAIiNPAIKM7H4BYOo=)
-  client-secret : ENC(iGXs8vKVkwJSPykb1JM1cSHydIphFlJMQbOda8qElxogVYJpGdOkksGARxDweDA/xCb8cfVZaHg=)
-
-jasypt:
-  encryptor:
-    password: ${ENCRYPTOR_PASSWORD}
+  client-id : ENC(icW2dKR7lQ0jro3v+dWGf1ehhG4Be7bDtU9BeIy6H38=)
+  client-secret : ENC(kYTfbJksLKEDJR1z3LKtfjrqG6G/u0nu4xfx6KJZCHUyQIjCYCnTls70Uyc2w7sNfYdY/17n47o=)
 ---
 spring:
   profiles: local
