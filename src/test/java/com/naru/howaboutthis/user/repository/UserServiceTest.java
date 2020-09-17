@@ -45,17 +45,15 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("단일_조회_테스트")
-    void 단일_조회_테스트() {
+    @DisplayName("이메일로_유저_존재_확인_테스트")
+    void 이메일로_유저_존재_확인_테스트() {
         // given
         String email = "test@naver.com";
 
         // when
-        User foundUser = userRepository.findByEmail(email).get();
+        boolean exists = userRepository.existsByEmail(email);
 
         // then
-        assertThat(foundUser.getName()).isEqualTo("naru");
-        assertThat(foundUser.getEmail()).isEqualTo("test@naver.com");
-        assertThat(foundUser.getPassword()).isEqualTo("test1234");
+        assertThat(exists).isEqualTo(true);
     }
 }

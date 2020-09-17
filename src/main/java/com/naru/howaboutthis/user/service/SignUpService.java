@@ -22,7 +22,7 @@ public class SignUpService {
     }
 
     public void checkDuplicateEmail(String email) {
-        if (userRepository.findByEmail(email).isPresent()) {
+        if (userRepository.existsByEmail(email)) {
             throw new DuplicateEmailException("중복된 이메일입니다");
         }
     }
