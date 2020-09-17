@@ -1,9 +1,9 @@
 package com.naru.howaboutthis.user.controller;
 
-import com.naru.howaboutthis.user.domain.GitHubProperty;
 import com.naru.howaboutthis.user.domain.GitHubUrl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +23,14 @@ import java.net.URI;
 @RestController
 public class OAuthController {
 
-    private final GitHubProperty gitHubProperty;
+    @Value("${github.client-id}")
+    public String clientId;
 
     @GetMapping("/code")
     public ResponseEntity<Object> getCode() {
         HttpHeaders headers = new HttpHeaders();
         URI uri = UriComponentsBuilder.fromUriString(GitHubUrl.CODE.getUrl())
-                .queryParam("client_id", gitHubProperty.getClientId())
+                .queryParam("client_id", clientId)
                 .queryParam("scope", "user")
                 .build()
                 .toUri();
