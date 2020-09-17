@@ -45,9 +45,8 @@ public class User {
     }
 
     public void checkPassword(User loginRequestUser) {
-        String hashPassword = hashPassword(loginRequestUser.password);
-        if (!this.name.equals(loginRequestUser.name)
-                || !this.password.equals(hashPassword)) {
+        if (!this.email.equals(loginRequestUser.email)
+                || !BCrypt.checkpw(loginRequestUser.password, this.password)) {
             throw new IllegalArgumentException("존재하지 않는 아이디이거나 비밀번호가 틀립니다");
         }
     }
