@@ -1,13 +1,22 @@
 package com.naru.howaboutthis.user.service;
 
 import com.naru.howaboutthis.user.domain.User;
+import com.naru.howaboutthis.util.ExceptionHelper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import javax.persistence.EntityNotFoundException;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+@SpringBootTest
 public class SignInServiceTest {
+
+    @Autowired
+    private SignInService signInService;
 
     private User savedUser;
 
@@ -20,6 +29,25 @@ public class SignInServiceTest {
 
         savedUser.hashPassword(savedUser);
         assertNotNull(savedUser);
+    }
+
+    @Test
+    public void 존재하지_않는_이메일() {
+        ExceptionHelper.exceptionTest(
+                EntityNotFoundException.class,
+                () -> signInService.checkUserByEmail("not@naru.com"),
+                "이 이메일로 가입된 아이디가 존재하지 않습니다"
+        );
+    }
+
+    @Test
+    public void 존재하지_않는_유저_조회_예외처리() {
+        ExceptionHelper.exceptionTest(
+                EntityNotFoundException.class,
+                () -> signInService.findById(0L),
+                "이 회원은 잘못된 회원입니다\n" +
+                        "Id가 존재하지 않습니다"
+        );
     }
 
     @Test
@@ -41,11 +69,10 @@ public class SignInServiceTest {
                 .build();
 
         assertNotNull(loginRequestUser);
-        IllegalArgumentException exception = assertThrows(
+        ExceptionHelper.exceptionTest(
                 IllegalArgumentException.class,
-                () -> savedUser.checkPassword(loginRequestUser)
+                () -> savedUser.checkPassword(loginRequestUser),
+                "존재하지 않는 아이디이거나 비밀번호가 틀립니다"
         );
-
-        assertThat(exception.getMessage()).isEqualTo("존재하지 않는 아이디이거나 비밀번호가 틀립니다");
     }
 }
