@@ -2,7 +2,6 @@ package com.naru.howaboutthis.user.controller;
 
 import com.naru.howaboutthis.user.domain.GitHubProperty;
 import com.naru.howaboutthis.user.domain.GitHubUrl;
-import com.naru.howaboutthis.user.service.SignUpService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -24,8 +23,6 @@ import java.net.URI;
 @RestController
 public class OAuthController {
 
-    private final SignUpService signUpService;
-
     private final GitHubProperty gitHubProperty;
 
     @GetMapping("/code")
@@ -44,7 +41,7 @@ public class OAuthController {
 
     @GetMapping("")
     public ResponseEntity<Object> oauth(@RequestParam String code, HttpServletResponse response) throws IOException {
-        response.sendRedirect("/api/users/policy");
+        response.sendRedirect("/main");
         return new ResponseEntity<>("OAuth Success", HttpStatus.FOUND);
     }
 }
