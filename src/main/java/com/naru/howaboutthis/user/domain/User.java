@@ -41,6 +41,18 @@ public class User {
     private String name;
 
     public void hashPassword(User user) {
-        this.password = BCrypt.hashpw(user.password, BCrypt.gensalt());
+        this.password = hashPassword(user.password);
+    }
+
+    public void checkPassword(User loginRequestUser) {
+        String hashPassword = hashPassword(loginRequestUser.password);
+        if (!this.name.equals(loginRequestUser.name)
+                || !this.password.equals(hashPassword)) {
+            throw new IllegalArgumentException("존재하지 않는 아이디이거나 비밀번호가 틀립니다");
+        }
+    }
+
+    private String hashPassword(String password) {
+        return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 }

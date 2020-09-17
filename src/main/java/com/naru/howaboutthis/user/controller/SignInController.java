@@ -23,7 +23,7 @@ public class SignInController {
 
     @PostMapping("/api/sign-in")
     public ResponseEntity<Void> signIn(@RequestBody @Validated({Default.class, SignIn.class}) User user) throws URISyntaxException {
-        signInService.checkUserByEmail(user.getEmail());
+        signInService.signIn(user);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(new URI("/api/main"));
