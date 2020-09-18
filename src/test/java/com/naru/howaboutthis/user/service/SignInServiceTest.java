@@ -22,11 +22,7 @@ public class SignInServiceTest {
 
     @BeforeEach
     public void setup() {
-        savedUser = User.builder()
-                .email("naru@naver.com")
-                .password("1234")
-                .build();
-
+        savedUser = User.getTestUser();
         savedUser.hashPassword(savedUser);
         assertNotNull(savedUser);
     }
@@ -44,31 +40,21 @@ public class SignInServiceTest {
     public void 존재하지_않는_유저_조회_예외처리() {
         ExceptionHelper.exceptionTest(
                 EntityNotFoundException.class,
-                () -> signInService.findById(0L),
-                "이 회원은 잘못된 회원입니다\n" +
-                        "Id가 존재하지 않습니다"
+                () -> signInService.findByEmail("not@naru.com"),
+                "이 이메일로 가입된 아이디가 존재하지 않습니다"
         );
     }
 
     @Test
     public void 유저_비밀번호_비교_성공() {
-        User loginRequestUser = User.builder()
-                .email("naru@naver.com")
-                .password("1234")
-                .build();
-
-        assertNotNull(loginRequestUser);
+        User loginRequestUser = User.getTestUser();
         assertDoesNotThrow(() -> savedUser.checkPassword(loginRequestUser));
     }
 
     @Test
     public void 유저_비밀번호_비교_실패() {
-        User loginRequestUser = User.builder()
-                .email("naru@naver.com")
-                .password("1235")
-                .build();
-
-        assertNotNull(loginRequestUser);
+        User loginRequestUser = User.getTestUser();
+        loginRequestUser.setPassword("testA1");
         ExceptionHelper.exceptionTest(
                 IllegalArgumentException.class,
                 () -> savedUser.checkPassword(loginRequestUser),

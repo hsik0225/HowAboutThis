@@ -19,7 +19,7 @@ public class SignInService {
         String email = loginRequestUser.getEmail();
         checkUserByEmail(email);
 
-        User savedUser = findById(loginRequestUser.getId());
+        User savedUser = findByEmail(email);
         savedUser.checkPassword(loginRequestUser);
     }
 
@@ -29,12 +29,11 @@ public class SignInService {
         }
     }
 
-    public User findById(Long id) {
+    public User findByEmail(String email) {
         return userRepository
-                .findById(id)
+                .findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException(
-                        "이 회원은 잘못된 회원입니다\n"
-                                + "Id가 존재하지 않습니다"
+                        "이 이메일로 가입된 아이디가 존재하지 않습니다"
                 ));
     }
 }

@@ -58,7 +58,7 @@ public class User {
 
     public static User getTestUser() {
         return User.builder()
-                .email("test@gmail.com")
+                .email("test@naru.com")
                 .password("zxckaA1")
                 .name("naru")
                 .build();
