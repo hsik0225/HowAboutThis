@@ -28,15 +28,6 @@ public class SignInServiceTest {
     }
 
     @Test
-    public void 존재하지_않는_이메일() {
-        ExceptionHelper.exceptionTest(
-                EntityNotFoundException.class,
-                () -> signInService.checkUserByEmail("not@naru.com"),
-                "이 이메일로 가입된 아이디가 존재하지 않습니다"
-        );
-    }
-
-    @Test
     public void 존재하지_않는_유저_조회_예외처리() {
         ExceptionHelper.exceptionTest(
                 EntityNotFoundException.class,

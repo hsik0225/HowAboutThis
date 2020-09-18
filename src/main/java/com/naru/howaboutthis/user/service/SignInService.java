@@ -17,16 +17,8 @@ public class SignInService {
     @Transactional
     public void signIn(User loginRequestUser) {
         String email = loginRequestUser.getEmail();
-        checkUserByEmail(email);
-
         User savedUser = findByEmail(email);
         savedUser.checkPassword(loginRequestUser);
-    }
-
-    public void checkUserByEmail(String email) {
-        if (!userRepository.existsByEmail(email)) {
-            throw new EntityNotFoundException("이 이메일로 가입된 아이디가 존재하지 않습니다");
-        }
     }
 
     public User findByEmail(String email) {
