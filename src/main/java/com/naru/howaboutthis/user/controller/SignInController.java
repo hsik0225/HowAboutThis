@@ -22,7 +22,7 @@ public class SignInController {
     private final SignInService signInService;
 
     @PostMapping("/api/sign-in")
-    public ResponseEntity<Void> signIn(@RequestBody @Validated({Default.class, SignIn.class}) User user) throws URISyntaxException {
+    public ResponseEntity<Void> signIn(@RequestBody @Validated({Default.class}) User user) throws URISyntaxException {
         signInService.signIn(user);
 
         HttpHeaders headers = new HttpHeaders();

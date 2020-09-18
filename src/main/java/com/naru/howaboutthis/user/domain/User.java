@@ -1,12 +1,14 @@
 package com.naru.howaboutthis.user.domain;
 
-import com.naru.howaboutthis.user.controller.SignIn;
 import com.naru.howaboutthis.user.controller.SignUp;
 import lombok.*;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Getter
@@ -35,7 +37,6 @@ public class User {
     private String password;
 
     @Column(name = "name")
-    @Null(groups = SignIn.class)
     @NotEmpty(groups = SignUp.class)
     @Size(min = 2, max = 16, groups = SignUp.class)
     private String name;
@@ -53,5 +54,13 @@ public class User {
 
     private String hashPassword(String password) {
         return BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+
+    public static User getTestUser() {
+        return User.builder()
+                .email("test@gmail.com")
+                .password("zxckaA1")
+                .name("naru")
+                .build();
     }
 }
