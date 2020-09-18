@@ -21,7 +21,7 @@ public class SignUpService {
         userRepository.save(user);
     }
 
-    public void checkDuplicateEmail(String email) {
+    public void checkDuplicateEmail(ㅎString email) {
         if (userRepository.existsByEmail(email)) {
             throw new DuplicateEmailException("중복된 이메일입니다");
         }
