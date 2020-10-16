@@ -36,7 +36,7 @@ class SignUpControllerTest {
     @Test
     @DisplayName("이용약관 목록 테스트")
     void 이용약관_목록_테스트() throws Exception {
-        String jsonPolicy = ObjectToJsonConverter.ObjectToJson(policy);
+        String jsonPolicy = ObjectToJsonConverter.objectToJson(policy);
         mockMvc.perform(get("/api/users/policy"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(jsonPolicy));
@@ -69,7 +69,7 @@ class SignUpControllerTest {
         testUser.setName("naru");
         testUser.setPassword("Test1234");
 
-        String jsonTestUser = ObjectToJsonConverter.ObjectToJson(testUser);
+        String jsonTestUser = ObjectToJsonConverter.objectToJson(testUser);
         mockMvc.perform(post("/api/users").contentType(MediaType.APPLICATION_JSON).content(jsonTestUser))
                 .andExpect(status().isFound())
                 .andExpect(redirectedUrl("/api/main"));

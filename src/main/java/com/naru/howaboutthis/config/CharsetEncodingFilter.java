@@ -14,7 +14,8 @@ public class CharsetEncodingFilter implements Filter {
     private static final String encoding = "UTF-8";
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {}
+    public void init(FilterConfig filterConfig) throws ServletException {
+    }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -24,5 +25,6 @@ public class CharsetEncodingFilter implements Filter {
     }
 
     @Override
-    public void destroy() {}
+    public void destroy() {
+    }
 }

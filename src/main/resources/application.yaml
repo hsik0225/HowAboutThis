@@ -7,8 +7,8 @@ spring:
     password: ENC(Kq6sm0YPnkGjzw4m23SgYA/hQ7bcnI8R)
 
 github:
-  client-id : ENC(icW2dKR7lQ0jro3v+dWGf1ehhG4Be7bDtU9BeIy6H38=)
-  client-secret : ENC(kYTfbJksLKEDJR1z3LKtfjrqG6G/u0nu4xfx6KJZCHUyQIjCYCnTls70Uyc2w7sNfYdY/17n47o=)
+  client-id: ENC(icW2dKR7lQ0jro3v+dWGf1ehhG4Be7bDtU9BeIy6H38=)
+  client-secret: ENC(kYTfbJksLKEDJR1z3LKtfjrqG6G/u0nu4xfx6KJZCHUyQIjCYCnTls70Uyc2w7sNfYdY/17n47o=)
 ---
 spring:
   profiles: local

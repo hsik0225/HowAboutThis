@@ -7,9 +7,10 @@ public class ObjectToJsonConverter {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    private ObjectToJsonConverter() {}
+    private ObjectToJsonConverter() {
+    }
 
-    public static String ObjectToJson(Object obj) throws JsonProcessingException {
+    public static String objectToJson(Object obj) throws JsonProcessingException {
         return objectMapper.writeValueAsString(obj);
     }
 }
